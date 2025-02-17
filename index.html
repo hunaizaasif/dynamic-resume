@@ -1,0 +1,187 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Resume Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .resume-preview {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .resume-preview h1, .resume-preview h2 {
+            color: #333;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dynamic Resume Builder</h1>
+    </header>
+    <div class="container">
+        <div class="section">
+            <h2>Personal Information</h2>
+            <div class="input-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name">
+            </div>
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email address">
+            </div>
+            <div class="input-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Education</h2>
+            <div class="input-group">
+                <label for="degree">Degree</label>
+                <input type="text" id="degree" placeholder="Enter your degree (e.g., Bachelor of Science)">
+            </div>
+            <div class="input-group">
+                <label for="university">University</label>
+                <input type="text" id="university" placeholder="Enter the university name">
+            </div>
+            <div class="input-group">
+                <label for="graduation-year">Graduation Year</label>
+                <input type="number" id="graduation-year" placeholder="Enter your graduation year">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Work Experience</h2>
+            <div class="input-group">
+                <label for="job-title">Job Title</label>
+                <input type="text" id="job-title" placeholder="Enter your job title">
+            </div>
+            <div class="input-group">
+                <label for="company">Company Name</label>
+                <input type="text" id="company" placeholder="Enter the company name">
+            </div>
+            <div class="input-group">
+                <label for="experience-description">Description</label>
+                <textarea id="experience-description" rows="4" placeholder="Describe your role and responsibilities"></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Skills</h2>
+            <div class="input-group">
+                <label for="skills">Skills (comma-separated)</label>
+                <input type="text" id="skills" placeholder="Enter your skills (e.g., JavaScript, TypeScript, HTML)">
+            </div>
+        </div>
+
+        <button onclick="generateResume()">Generate Resume</button>
+
+        <div class="resume-preview hidden" id="resume-preview">
+            <h1 id="preview-name"></h1>
+            <p><strong>Email:</strong> <span id="preview-email"></span></p>
+            <p><strong>Phone:</strong> <span id="preview-phone"></span></p>
+            <h2>Education</h2>
+            <p><strong>Degree:</strong> <span id="preview-degree"></span></p>
+            <p><strong>University:</strong> <span id="preview-university"></span></p>
+            <p><strong>Graduation Year:</strong> <span id="preview-graduation-year"></span></p>
+            <h2>Work Experience</h2>
+            <p><strong>Job Title:</strong> <span id="preview-job-title"></span></p>
+            <p><strong>Company:</strong> <span id="preview-company"></span></p>
+            <p><strong>Description:</strong> <span id="preview-experience-description"></span></p>
+            <h2>Skills</h2>
+            <ul id="preview-skills"></ul>
+        </div>
+    </div>
+
+    <script>
+        function generateResume() {
+            // Capture user inputs
+            const name = document.getElementById('name').value || 'Your Name';
+            const email = document.getElementById('email').value || 'your.email@example.com';
+            const phone = document.getElementById('phone').value || '(123) 456-7890';
+            const degree = document.getElementById('degree').value || 'Bachelor of Science';
+            const university = document.getElementById('university').value || 'University Name';
+            const graduationYear = document.getElementById('graduation-year').value || '2020';
+            const jobTitle = document.getElementById('job-title').value || 'Job Title';
+            const company = document.getElementById('company').value || 'Company Name';
+            const experienceDescription = document.getElementById('experience-description').value || 'No description provided.';
+            const skillsInput = document.getElementById('skills').value || '';
+            const skills = skillsInput.split(',').map(skill => skill.trim());
+
+            // Populate the resume preview dynamically
+            document.getElementById('preview-name').innerText = name;
+            document.getElementById('preview-email').innerText = email;
+            document.getElementById('preview-phone').innerText = phone;
+            document.getElementById('preview-degree').innerText = degree;
+            document.getElementById('preview-university').innerText = university;
+            document.getElementById('preview-graduation-year').innerText = graduationYear;
+            document.getElementById('preview-job-title').innerText = jobTitle;
+            document.getElementById('preview-company').innerText = company;
+            document.getElementById('preview-experience-description').innerText = experienceDescription;
+
+            const skillsList = document.getElementById('preview-skills');
+            skillsList.innerHTML = ''; // Clear previous skills
+            skills.forEach(skill => {
+                const listItem = document.createElement('li');
+                listItem.innerText = skill;
+                skillsList.appendChild(listItem);
+            });
+
+            // Show the resume preview
+            document.getElementById('resume-preview').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
+```
